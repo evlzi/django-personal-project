@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>About Gradebook</h1>
+    <p>
+      Gradebook is a platform that hosts education institutions. To join an institution, click <a href="{% url 'institution_list' %}">here</a>.
+    </p>
+
+    <h1>Gradebook Account</h1>
+    <p>
+      {% if user.is_authenticated %}
+        You can view and manage your account <a href="{% url 'account_list' %}">here</a>.
+      {% else %}
+        You are not logged in. <a href="{% url 'account_login' %}">Log In</a> <a href="{% url 'account_signup' %}">Sign Up</a>
+      {% endif %}
+    </p>
+  </div>
+{% endblock %}

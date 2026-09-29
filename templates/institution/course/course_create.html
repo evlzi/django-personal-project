@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %} <!-- pip install django-widget-tweaks -->
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <span class="author"><a href="{% url 'institution_list' %}" class="Link">institution</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+  <span class="author"><a href="{{ institution.get_absolute_url }}" class="Link">{{ institution.name }}</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+  <span class="author"><a href="{% url 'institution_manage' institution.pk %}" class="Link">manage</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+  <span class="author"><a href="{% url 'institution_course_create' institution.pk %}" class="Link">create_course</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>New Course</h1>
+    {% if user.is_authenticated and request.user.profile.user_type == 2 and user.profile.institution == institution %}
+      <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3">
+            <label class="form-label">{{ field.label }}</label>
+
+            {% render_field field class='form-control' rows='1' %}
+          </div>
+        {% endfor %}
+
+        <input class="btn btn-sm btn-primary nav-right" type="submit" value="Save" />
+      </form>
+    {% else %}
+      <meta http-equiv="refresh" content="0; url={% url 'account_login' %}" />
+      <p>
+        You are not logged in. <a href="{% url 'account_login' %}">Log In</a> <a href="{% url 'account_signup' %}">Sign Up</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}

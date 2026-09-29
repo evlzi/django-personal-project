@@ -1,0 +1,14 @@
+{% extends 'institution/institution_base.html' %}
+
+{% block breadcrumbs %}
+{{ block.super }}
+        <span class="author"><a href="{{ institution.get_absolute_url }}" " class="Link">{{ institution.name }}</a></span>
+        <span class="mx-1 color-fg-muted">/</span>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>About {{ institution.name }}</h1>
+    <p>{{ institution.about }}</p>
+  </div>
+{% endblock %}

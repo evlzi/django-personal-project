@@ -1,0 +1,14 @@
+{% extends 'institution/course/course_base.html' %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <a href="{% url 'institution_course_about' institution.pk course.pk %}" class="Link">{{ course.name }}</a>
+  <span class="mx-1 color-fg-muted">/</span>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>About {{ course.name }}</h1>
+    <p>{{ course.about }}</p>
+  </div>
+{% endblock %}

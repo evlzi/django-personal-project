@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+  <span class="author"><a href="{% url 'institution_list' %}" class="Link">institution</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>Join an Institution</h1>
+    <p>
+      Below is a list of institutions hosted on the platform. If you cannot find your institution, create one <a href="{% if user.is_authenticated %}
+          {% url 'institution_create' %}
+        {% else %}
+          {% url 'account_login' %}
+        {% endif %}">
+        here
+      </a>.
+    </p>
+
+    <div class="SelectMenu">
+      <div class="SelectMenu-modal">
+        <div class="SelectMenu-list">
+          {% for institution in institution_list %}
+            <a href="{{ institution.get_absolute_url }}" class="SelectMenu-item" role="menuitem">{{ institution.name }}</a>
+          {% empty %}
+            <a class="SelectMenu-item" role="menuitem">No institutions available on the platform.</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

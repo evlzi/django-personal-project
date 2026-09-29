@@ -1,0 +1,26 @@
+{% extends 'institution/institution_base.html' %}
+
+{% block breadcrumbs %}
+  {{ block.super }}
+  <span class="author"><a href="{{ institution.get_absolute_url }}" class="Link">{{ institution.name }}</a></span>
+  <span class="mx-1 color-fg-muted">/</span>
+{% endblock %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>Courses at {{ institution.name }}</h1>
+    <p>Below is a list of courses provided by this institution.</p>
+
+    <div class="SelectMenu">
+      <div class="SelectMenu-modal">
+        <div class="SelectMenu-list">
+          {% for course in institution.courses.all %}
+            <a href="{% url 'institution_course_about' institution.pk course.pk %}" class="SelectMenu-item" role="menuitem">{{ course.name }}</a>
+          {% empty %}
+            <a class="SelectMenu-item" role="menuitem">No courses available for this institution yet.</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

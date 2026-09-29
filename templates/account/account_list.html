@@ -1,0 +1,38 @@
+{% extends 'account/account_base.html' %}
+
+{% block content %}
+  <div class="container-xl px-3">
+    <h1>Manage Account</h1>
+    {% if user.is_authenticated %}
+      <form id="account_logout_form" action="{% url 'account_logout' %}" method="post" style="display: none;">
+        {% csrf_token %}
+      </form>
+
+      <p>
+        Logged in as {{ user.username }}!
+        <a href="#" onclick="event.preventDefault(); document.getElementById('account_logout_form').submit();">Log Out</a>
+      </p>
+
+      <div class="SelectMenu">
+        <div class="SelectMenu-modal">
+          <div class="SelectMenu-list">
+            <header class="SelectMenu-header">
+              <h3 class="SelectMenu-title">Enrolled Institution</h3>
+            </header>
+            {% if user.profile.institution %}
+              <a href="{{ user.profile.institution.get_absolute_url }}" class="SelectMenu-item" role="menuitem">{{ user.profile.institution.name }}</a>
+            {% else %}
+              <div class="SelectMenu-item" role="menuitem">
+                You are not part of any institution.&nbsp;<a href="{% url 'institution_list' %}">Enroll</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <p>
+        You are not logged in. <a href="{% url 'account_login' %}">Log In</a> <a href="{% url 'account_signup' %}">Sign Up</a>
+      </p>
+    {% endif %}
+  </div>
+{% endblock %}
